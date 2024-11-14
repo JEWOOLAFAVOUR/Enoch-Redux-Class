@@ -4,26 +4,47 @@ const createStore = redux.createStore;
 // INITIAL STATE
 const initialState = {
     cake: 10,
-    email: "",
-    firstname: "",
-    todo: [],
+    cookies: 20,
 };
 
 // ACTION CREATOR
-const orderCake = () => {
+const orderCake = (enoch) => {
     return {
-        type: "dudu"
+        type: "cake",
+        enoch
+    };
+};
+
+const restockCake = () => {
+    return {
+        type: "cake_restock"
+    };
+};
+
+const orderCookies = () => {
+    return {
+        type: "cookies"
     };
 };
 
 // REDUCER
 const cakeReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "dudu":
+        case "cake":
             return {
                 ...state,
-                cake: state.cake - 1
+                cake: state.cake - action.enoch
             };
+        case "cake_restock":
+            return {
+                ...state,
+                cake: state.cake + 1
+            };
+        case "cookies":
+            return {
+                ...state,
+                cookies: state.cookies - 1
+            }
         default:
             return state;
     };
@@ -38,8 +59,12 @@ store.subscribe(() => {
     console.log('for checking', store.getState());
 });
 
-store.dispatch(orderCake())
-store.dispatch(orderCake())
-store.dispatch(orderCake())
+store.dispatch(orderCake(5))
+// store.dispatch(orderCake())
+// store.dispatch(orderCake())
+// store.dispatch(orderCookies())
+// store.dispatch(orderCookies())
+// store.dispatch(restockCake())
 
 // ACTION TYPE
+
